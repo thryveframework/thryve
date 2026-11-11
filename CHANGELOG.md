@@ -5,6 +5,28 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- Examples, in `examples/`: one program, a report on a web server's access log, written in
+  Rust, C, C++ and Python. Each prints the same report from the same sample log. They use a
+  plugin, an observer, a split, two joins and a fan-out.
+- `examples/python/thryve.py`: the C API for Python, through `ctypes`. It runs on the C
+  library from the 0.1.0 release.
+- A guide for Python developers, `crates/thryve_ffi/docs/python-dev-guide.md`: plugins,
+  observers and typed tasks in Python, through `thryve.py`.
+- A second example, `projects`, in the same four languages: two unrelated projects in one
+  engine at the same time, the access-log report and a count of the primes below 10,000,000.
+- The C and C++ examples can have Thryve built into them, without the DLL:
+  `-DTHRYVE_FFI_STATIC=ON`, with MSVC and this repository's build of the C library.
+
+### Changed
+
+- The C and C++ examples, with their CMake and Make files, moved from `crates/thryve_ffi` to
+  `examples/c_cpp`. They build against this repository's build of the C library, or against a
+  release download.
+
 ## [0.1.0] - 2026-11-09
 
 The first release of Thryve, a task engine for Rust and C: plugins send tasks, observers

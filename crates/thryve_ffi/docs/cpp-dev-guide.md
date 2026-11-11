@@ -420,7 +420,7 @@ ThryveAdvHandle report = thryve_adv_handles_join(parts, 2, "Report", write_repor
 thryve_adv_handle_free(report);  // nothing follows Report
 ```
 
-Splitting work (`thryve_packet_handle_split_into`), forwarding (`thryve_adv_task_create_forward`) and cancelling (`thryve_adv_handle_cancel`) work the same way: see the [FFI README](../README.md#typed-tasks). [`examples/main.cpp`](../examples/main.cpp) runs the whole pipeline.
+Splitting work (`thryve_packet_handle_split_into`), forwarding (`thryve_adv_task_create_forward`) and cancelling (`thryve_adv_handle_cancel`) work the same way: see the [FFI README](../README.md#typed-tasks). [`examples/c_cpp/cpp/log_report.cpp`](../../../examples/c_cpp/cpp/log_report.cpp) runs a whole pipeline: a split, a join, a fan-out, and another join.
 
 ### Rules to keep in mind
 

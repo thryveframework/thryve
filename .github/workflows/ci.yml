@@ -41,6 +41,45 @@ jobs:
       - uses: Swatinem/rust-cache@v2
       - run: cargo test --workspace --tests -- --nocapture --test-threads=1
 
+  examples:
+    name: Examples
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      # The C library, for the C, C++ and Python examples, and the Rust examples.
+      - run: cargo build -p thryve_ffi -p thryve_examples
+      - run: cmake -S examples/c_cpp -B examples/c_cpp/build
+      - run: cmake --build examples/c_cpp/build --config Debug
+      # The same two programs with Thryve built into them, without the DLL.
+      - run: cmake -S examples/c_cpp -B examples/c_cpp/build-static -DTHRYVE_FFI_STATIC=ON
+      - run: cmake --build examples/c_cpp/build-static --config Debug
+      # Every language prints what Rust prints. Thryve's own last line names the program's folder,
+      # so it's left out of the comparison.
+      - name: Run the examples and compare them
+        shell: bash
+        run: |
+          report() { "$@" | tr -d '\r' | grep -v -e '^Failed to spawn GUI' -e '^Process spawned'; }
+          for program in access_log projects; do
+            report target/debug/$program.exe > rust_$program.txt
+            report examples/c_cpp/build/Debug/${program}_c.exe > c_$program.txt
+            report examples/c_cpp/build/Debug/${program}_cpp.exe > cpp_$program.txt
+            report examples/c_cpp/build-static/Debug/${program}_c.exe > c_static_$program.txt
+            report examples/c_cpp/build-static/Debug/${program}_cpp.exe > cpp_static_$program.txt
+            report python examples/python/$program.py > python_$program.txt
+            cat rust_$program.txt
+            for version in c cpp c_static cpp_static python; do
+              diff rust_$program.txt ${version}_$program.txt
+            done
+          done
+          # And Rust prints what it should: the report, and the primes' numbers, which anyone can
+          # check.
+          grep -qx 'Access log report' rust_access_log.txt
+          grep -qx '  primes: 664579' rust_projects.txt
+          grep -qx '  twin-prime pairs: 58980' rust_projects.txt
+          grep -qx '  largest gap: 154, after 4652353' rust_projects.txt
+
   msrv:
     name: Minimum Rust version
     runs-on: windows-latest

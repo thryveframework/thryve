@@ -16,5 +16,10 @@ crates/thryve_utils/src/debug_logging.rs
 crates/thryve_ffi/out
 graphify-out
 
+# What the examples build and write
+examples/c_cpp/build*/
+examples/python/out
+__pycache__
+
 licensing
 licensing-backups

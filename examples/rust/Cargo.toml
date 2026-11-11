@@ -1,0 +1,23 @@
+[package]
+    name = "thryve_examples"
+    version = "0.1.0"
+    edition.workspace = true
+    rust-version.workspace = true
+    license.workspace = true
+    publish = false
+    description = "Thryve's examples in Rust: each one a program, run with `cargo run -p thryve_examples --bin <name>`."
+
+[dependencies]
+    thryve = { path = "../../crates/thryve" }
+
+# The projects the programs run, and Console, which prints their reports.
+[lib]
+    path = "lib.rs"
+
+[[bin]]
+    name = "access_log"
+    path = "access_log.rs"
+
+[[bin]]
+    name = "projects"
+    path = "projects.rs"

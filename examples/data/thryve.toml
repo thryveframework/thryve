@@ -1,0 +1,35 @@
+# The configuration every example uses: Thryve's defaults, with graph mode on, so that Topology shows the
+# run's task graph at shutdown (once Topology.exe sits next to the example's program), and without the
+# debugging wait before the engine starts.
+[init]
+root_dir = ""
+
+[service]
+can_stop = true
+can_pause = true
+
+[engine]
+idle_wait = 100
+shutdown_grace_period = 10
+
+[threads]
+worker_count = 4
+
+[pipes]
+task_pipe_capacity = 1024
+tasks_processed_per_turn = 500
+notif_pipe_capacity = 1024
+notifs_processed_per_turn = 500
+res_pipe_capacity = 1024
+res_processed_per_turn = 500
+
+[tasks]
+max_priority = 4
+aging_interval = 3
+
+[debugging]
+is_debugging = true
+wait_before_execution = 0
+visual_graph = true
+calculate_metrics = false
+log_tasks = false

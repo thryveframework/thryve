@@ -644,14 +644,14 @@ Thryve builds on Windows only, for now.
 
 ### Build System Files
 
-The `thryve_ffi` directory includes build files for the two examples, which also show how to include the generated headers and link against the shared library:
+The repository's [`examples/c_cpp`](../../examples/c_cpp) folder holds the build files for the C and C++ examples, which also show how to include the generated headers and link against the shared library. Both build against this repository's build of the library, or against a release download:
 
-- **`CMakeLists.txt`** — finds the library in the workspace's `target/` folder, links the DLL's import library (MSVC or GNU), and copies the DLL next to each example. From `crates/thryve_ffi`, after `cargo build -p thryve_ffi`:
+- **`CMakeLists.txt`** — finds the library in the workspace's `target/` folder, or in a release download named with `-DTHRYVE_FFI_DIR`; links the DLL's import library (MSVC or GNU), and copies the DLL next to each example. From `examples/c_cpp`, after `cargo build -p thryve_ffi`:
   ```bash
   cmake -S . -B build
   cmake --build build
   ```
-- **`Makefile`** — GNU Make with gcc/g++ and a POSIX shell (MSYS2 on Windows): `make example-c`, `make example`, or `make BUILD_TYPE=release all`. It builds the library first, and on Windows links the DLL itself and copies it next to each example.
+- **`Makefile`** — GNU Make with gcc/g++ and a POSIX shell (MSYS2 on Windows): `make`, `make c`, `make cpp`, `make BUILD_TYPE=release`, or `make THRYVE_FFI_DIR=<folder>` for a release download. It builds the library first, and on Windows links the DLL itself and copies it next to each example.
 
 ---
 
@@ -810,12 +810,13 @@ Wraps `core_ptr: *mut c_void`. Implements the `NotifLogic` trait. Marked `Send +
 
 ## Complete Examples
 
-Two complete programs, each a plugin, an observer and a pipeline of typed tasks, are in [`examples/`](examples/):
+The repository's [`examples/`](../../examples) folder holds two programs in each language, built from plugins, an observer and pipelines of typed tasks: a report on a web server's access log, and two projects in one engine (the same report, next to a count of primes). In the report, the plugin's entry point reads the log and splits its lines over 8 Parse tasks; Merge joins their counts; four sections share Merge's result in a fan-out; and Report joins the sections and sends the text to the observer, whose job loops on `thryve_observer_pop`, prints the reports, and ends the run.
 
-- [`examples/main.c`](examples/main.c), in C;
-- [`examples/main.cpp`](examples/main.cpp), in C++, with the jobs written as lambdas.
+- [`examples/c_cpp/c/`](../../examples/c_cpp/c), in C;
+- [`examples/c_cpp/cpp/`](../../examples/c_cpp/cpp), in C++;
+- [`examples/python/`](../../examples/python), in Python, through [`thryve.py`](../../examples/python/thryve.py): this API for Python, through `ctypes`. The [Python guide](docs/python-dev-guide.md) shows how to use it.
 
-The plugin's entry point wires Hash, then LoadImg, then Thumbnail and Metadata sharing the decoded image, joined into Report. The observer's job loops on `thryve_observer_pop` until the shutdown. Build them with [`CMakeLists.txt`](CMakeLists.txt) or the [`Makefile`](Makefile) (see [Build System Files](#build-system-files)).
+Build the C and C++ programs with the files in [Build System Files](#build-system-files). [`examples/README.md`](../../examples/README.md) says how to run each.
 
 ---
 
@@ -825,6 +826,7 @@ The plugin's entry point wires Hash, then LoadImg, then Thumbnail and Metadata s
 - [`src/typed_tasks.rs`](src/typed_tasks.rs) — Typed tasks, follow-ups, joins, splits, cancelling and fan-out
 - [`Cargo.toml`](Cargo.toml) — Dependencies
 - [`docs/cpp-dev-guide.md`](docs/cpp-dev-guide.md) — C++ developer guide
+- [`docs/python-dev-guide.md`](docs/python-dev-guide.md) — Python developer guide, through `thryve.py`
 - [`thryve_utils/src/traits/plugin_logic.rs`](../thryve_utils/src/traits/plugin_logic.rs) — PlgLogic trait
 - [`thryve_utils/src/traits/observer_logic.rs`](../thryve_utils/src/traits/observer_logic.rs) — ObsLogic trait
 - [`thryve_utils/src/traits/notif_logic.rs`](../thryve_utils/src/traits/notif_logic.rs) — NotifLogic trait

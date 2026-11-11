@@ -2,6 +2,7 @@
     members = [
         "crates/thryve*",
         "tests",
+        "examples/rust",
     ]
 
     default-members = [

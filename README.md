@@ -2,7 +2,7 @@
 
 A high-performance, extensible task management and execution framework written in Rust. Thryve provides a robust architecture for managing concurrent task execution, event-driven notifications, and modular plugin-based extensions.
 
-What changed in each release is in [CHANGELOG.md](CHANGELOG.md).
+What changed in each release is in [CHANGELOG.md](CHANGELOG.md). Runnable examples, the same program in Rust, C, C++ and Python, are in [examples/](examples/).
 
 ## Table of Contents
 

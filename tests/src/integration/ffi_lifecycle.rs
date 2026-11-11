@@ -17,7 +17,7 @@
 //! `thryve_run_interactive_start`, sends a task through the real FFI packet
 //! handle, and blocks on `thryve_run_interactive_free` until the engine drains
 //! and exits - the same sequence a real C/C++ consumer (see
-//! `thryve_ffi/examples/main.c`) drives through the extern "C" boundary.
+//! `examples/c_cpp/c/`) drives through the extern "C" boundary.
 
 mod tests_ffi_full_lifecycle {
     use std::ffi::CString;
