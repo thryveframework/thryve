@@ -24,8 +24,8 @@
 #define RANGES 8
 // How many numbers each range holds.
 #define RANGE_SIZE (LIMIT / RANGES)
-// The Sieve tasks' priority: low, so that tasks with a higher priority go first.
-#define PRIORITY 1
+// The Sieve tasks' priority. When tasks wait for a worker, the higher priority goes first.
+#define PRIORITY 2
 // Printed under the report's title, so that the numbers aren't taken for Thryve's own metrics.
 #define NOTE                                                                                  \
     "Note: The following numbers are calculations about the numbers below 10,000,000 and are " \

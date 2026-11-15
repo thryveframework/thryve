@@ -16,9 +16,8 @@
 //! - Write follows Combine (a `then` step): it writes the report and sends it to Console, an
 //!   observer, which prints it.
 //!
-//! The Sieve tasks run at a low priority, 1. When other tasks wait for a worker too, those with a
-//! higher priority go first; Thryve raises the priority of a task that waits, so the Sieve tasks
-//! still get their turn.
+//! The Sieve tasks run at priority 2. When tasks wait for a worker, the higher priority goes
+//! first, and tasks with the same priority go in the order they arrived.
 //!
 //! Anyone can check the numbers: 664,579 primes (OEIS A006880), 58,980 twin-prime pairs (OEIS
 //! A007508), and a largest gap of 154, after 4,652,353 (Wikipedia, "Prime gap").
@@ -42,8 +41,8 @@ pub const PROJECT: &str = "primes";
 const LIMIT: u32 = 10_000_000;
 /// How many ranges the numbers are cut into, each sieved by a Sieve task of its own.
 const RANGES: usize = 8;
-/// The Sieve tasks' priority: low, so that tasks with a higher priority go first.
-const PRIORITY: u8 = 1;
+/// The Sieve tasks' priority. When tasks wait for a worker, the higher priority goes first.
+const PRIORITY: u8 = 2;
 /// Printed under the report's title, so that the numbers aren't taken for Thryve's own metrics.
 const NOTE: &str = "Note: The following numbers are calculations about the numbers below 10,000,000 \
                     and are not metrics related to Thryve itself.";

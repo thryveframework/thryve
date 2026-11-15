@@ -10,9 +10,9 @@
 // Two projects in one engine, in C++: the access-log report and Primes.
 //
 // Each project is a plugin of its own, and neither names the other. The engine runs both at the
-// same time, on the same workers; when tasks of both wait for a worker, the report's go first,
-// since they have the higher priority. Console prints the reports once all of them are in, in the
-// order the projects were named, then ends the run.
+// same time, on the same workers. Their tasks have the same priority, so when tasks of both wait
+// for a worker, they go in the order they arrived. Console prints the reports once all of them
+// are in, in the order the projects were named, then ends the run.
 //
 // Build it with CMakeLists.txt or the Makefile in examples/c_cpp, then name the projects to run,
 // or none for both:

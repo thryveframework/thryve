@@ -84,9 +84,10 @@ How Thryve runs Primes:
 - **Combine** waits for all 8 (a join) and adds up what they found.
 - **Write** follows Combine (a `then` step) and sends the report to **Console**.
 
-The two projects share the engine's workers. The Sieve tasks run at a lower priority than the
-report's tasks, so when tasks of both wait for a worker, the report's go first. Thryve raises the
-priority of a task that waits, so the Sieve tasks still get their turn.
+The two projects share the engine's workers. Their tasks have the same priority, 2, so when tasks
+of both wait for a worker, they go in the order they arrived. Lower one project's `PRIORITY` and
+the other's tasks go first; Thryve raises the priority of a task that waits, so the lowered
+project's tasks still get their turn.
 
 Neither project names the other. Console waits for a report from each, prints them in the order
 the projects were named, and ends the run, so the output is the same on every run.
