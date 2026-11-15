@@ -93,7 +93,9 @@ if(THRYVE_FFI_STATIC)
         IMPORTED_LOCATION "${THRYVE_FFI_STATIC_LIB}"
         # The Windows libraries that Rust's code calls into. To print the list for your Rust:
         #   cargo rustc -p thryve_ffi --lib -- --print native-static-libs
-        INTERFACE_LINK_LIBRARIES "kernel32;ntdll;userenv;ws2_32;dbghelp"
+        # Newer Rust also needs synchronization (WaitOnAddress and WakeByAddress*); with an older
+        # Rust it goes unused, which does no harm.
+        INTERFACE_LINK_LIBRARIES "kernel32;ntdll;userenv;ws2_32;dbghelp;synchronization"
     )
 elseif(WIN32)
     add_library(thryve_ffi SHARED IMPORTED)
